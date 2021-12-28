@@ -1,0 +1,1640 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API dành cho trang web Grade management system",
+    "version": "1.0.0",
+    "title": "Grade management system API",
+    "contact": {
+      "email": "efert269@gmail.com"
+    }
+  },
+  "basePath": "/api/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "accounts",
+      "description": "Liên quan đến tài khoản người dùng"
+    },
+    {
+      "name": "login",
+      "description": "Liên quan đến đăng nhập người dùng"
+    },
+    {
+      "name": "admin",
+      "description": "Liên quan đến quản trị"
+    },
+    {
+      "name": "users",
+      "description": "Liên quan đến người dùng"
+    },
+    {
+      "name": "class",
+      "description": "Liên quan đến lớp"
+    }
+  ],
+  "paths": {
+    "/accounts/verify": {
+      "post": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Tạo mã xác nhận và gửi mail cho người dùng",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{ message: 'Gửi mã xác thực thành công!' }"
+          },
+          "400": {
+            "description": "{message: 'Email đã được sử dụng!', error}"
+          },
+          "401": {
+            "description": "{message: 'Gửi mã thất bại!', error}"
+          }
+        }
+      }
+    },
+    "/accounts/signup": {
+      "post": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Đăng ký tài khoản mới",
+        "description": "Chức năng đăng ký",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "verifyCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fullName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "birthday",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "in": "path",
+            "description": "",
+            "type": "boolean"
+          },
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{ message: 'tạo tài khoản thành công!' }"
+          },
+          "400": {
+            "description": "{ message: 'tạo tài khoản thất bại!', error }"
+          },
+          "401": {
+            "description": "{ message: 'email đã được sử dụng' }"
+          }
+        }
+      }
+    },
+    "/accounts/verify/forgot": {
+      "post": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Gửi mã xác nhận reset mật khẩu",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{ message: 'Gửi mã xác thực thành công!' }"
+          },
+          "401": {
+            "description": "{ message: 'Tài khoản không tồn tại.' }"
+          },
+          "409": {
+            "description": "{ message: 'Gửi mã xác thực thất bại' }"
+          }
+        }
+      }
+    },
+    "/accounts/forgot-pw": {
+      "post": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Reset lại mật khẩu",
+        "description": "Chức năng quên mật khẩu",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "mật khẩu mới",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "verifyCode",
+            "in": "path",
+            "description": "Mã xác nhận",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{ message: 'Thay đổi mật khẩu thành công' }"
+          },
+          "403": {
+            "description": "{ message: 'Tài khoản không tồn tại!' }"
+          },
+          "401": {
+            "description": "{ message: 'Mã xác nhận không hợp lệ.' }"
+          },
+          "409": {
+            "description": "{ message: 'Thay đổi mật khẩu thất bại' }"
+          }
+        }
+      }
+    },
+    "/accounts/change-pw": {
+      "post": {
+        "tags": [
+          "accounts"
+        ],
+        "summary": "Reset lại mật khẩu",
+        "description": "Chức năng đổi mật khẩu",
+        "parameters": [
+          {
+            "name": "password",
+            "in": "path",
+            "description": "mật khẩu cũ",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "newPassword",
+            "in": "path",
+            "description": "mật khẩu mới",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{ message: 'Thay đổi mật khẩu thành công!' }"
+          },
+          "401": {
+            "description": "{ message: 'Tài khoản không tồn tại!' }"
+          },
+          "403": {
+            "description": "{ message: 'Mật khẩu không đúng.' }"
+          },
+          "409": {
+            "description": "{ message: 'Thay đổi mật khẩu thất bại.' }"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Đăng nhập local",
+        "description": "Chức năng đăng nhập với tài khoản đã đăng ký",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "keepLogin",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Đăng nhập thành công.',refreshToken, token, role }"
+          },
+          "401": {
+            "description": "{ message: 'Sai tài khoản hoặc mật khẩu!' }"
+          },
+          "400": {
+            "description": "{ message: 'Đăng nhập thất bại. Thử lại', error }"
+          }
+        }
+      }
+    },
+    "/login/google": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Đăng nhập bằng google",
+        "description": "Chức năng đăng nhập với tài khoản đã đăng ký",
+        "parameters": [
+          {
+            "name": "access_token",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Đăng nhập thành công.',refreshToken, token, role }"
+          },
+          "401": {
+            "description": "{ message: 'Lỗi! Vui lòng thử lại.', error }"
+          }
+        }
+      }
+    },
+    "/login/refresh_token": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Lấy token mới.",
+        "description": "Lấy token mới khi access token hết hạn.",
+        "parameters": [
+          {
+            "name": "refresh_token",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'refresh token thành công!',refreshToken, token, role }"
+          },
+          "401": {
+            "description": "{ message: 'Không được phép!',error }"
+          },
+          "403": {
+            "description": "{ message: 'Refresh token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/login/logout": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Đăng xuất",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Đăng xuất thành công!'}"
+          },
+          "409": {
+            "description": "{ message: 'Đăng xuất thất bại!' }"
+          }
+        }
+      }
+    },
+    "/users/my": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy thông tin người dùng hiện tại",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Lấy thông tin thành công!'}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/my ": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Cập nhật thông tin người dùng hiện tại",
+        "description": "",
+        "parameters": [
+          {
+            "name": "fullName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "birthday",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Cập nhật thông tin thành công!', user}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/student-id": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Cập nhật thông tin studentID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'POST StudentID Thành công!'}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/join": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Tham gia lớp học",
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Tham gia thành công!' | 'Đã tham gia rồi!'}"
+          },
+          "401": {
+            "description": "{ message: 'Tài khoản chưa có studentId!' }"
+          },
+          "403": {
+            "description": "{ message: 'Mã lớp không tồn tại!' }"
+          },
+          "409": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/users/student/my-courses": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Danh sách các lớp đã tham gia",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Lấy danh sách khoá học thành công!', myCourses}"
+          },
+          "401": {
+            "description": "{ message: 'Tài khoản chưa có studentId!' }"
+          },
+          "403": {
+            "description": "{ message: 'token không hợp lệ!' }"
+          },
+          "409": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/users/student/course/:code": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Chi tiết lớp đã tham gia",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result, gradeStruct}"
+          },
+          "403": {
+            "description": "{ message: 'token không hợp lệ!' }"
+          },
+          "409": {
+            "description": "{ message: 'Lỗi!', error }"
+          }
+        }
+      }
+    },
+    "/users/teacher/create-class": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Tạo lớp học",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "path",
+            "description": "file danh sách học sinh",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!',code}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/my-class": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy danh sách các lớp đang dạy",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "active",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "boolean"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "tên lớp",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "path",
+            "description": "sort=<tên trường>_<cách sort (1|-1)(asc|desc)>",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', numOfClass, result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/class/:code": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy chi tiết lớp đang dạy",
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result, gradeStruct}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/assignment": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Thêm bài tập cho lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "structGrade",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "pending",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expired",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/assignment/update": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Sửa thông tin bài tập cho lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "tên bài tập",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "path",
+            "description": "mã bài tập",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "structGrade",
+            "in": "path",
+            "description": "mã cột điểm",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pending",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "expired",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/assignment/grade": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Thêm điểm cho bài tập",
+        "description": "",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "path",
+            "description": "file điểm",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "path",
+            "description": "mã bài tập",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/grade-struct": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy cấu trúc điểm của 1 lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/grade-struct ": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "thêm 1 cấu trúc điểm của 1 lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "structName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "percent",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "in": "path",
+            "description": "Tổng điểm",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thêm thành công!'}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: 'Tổng phần trăm vượt quá 100%' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/grade-struct/update": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "sửa 1 cấu trúc điểm của 1 lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "structName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "percent",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "in": "path",
+            "description": "Tổng điểm",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Cập nhật thành công'}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: 'Tổng phần trăm vượt quá 100%' }"
+          }
+        }
+      }
+    },
+    "/users/teacher/assignments": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy danh sách bài tập của 1 lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          }
+        }
+      }
+    },
+    "/users/teacher/assignment ": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy chi tiết bài tập của 1 lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "Mã bài tập",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          }
+        }
+      }
+    },
+    "/users/teacher/grades": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy danh sách điểm của 1 lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "studentId",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          }
+        }
+      }
+    },
+    "/admin/login": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Đăng nhập admin",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'POST StudentID Thành công!'}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra', error }"
+          },
+          "403": {
+            "description": "{ message: token không hợp lệ!' }"
+          }
+        }
+      }
+    },
+    "/admin/teachers": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy thông tin giáo viên và phân trang",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "tìm theo tên",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "sort",
+            "in": "path",
+            "description": "sort=<tên trường>_<cách sort (1|-1)(asc|desc)>",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Lỗi', error }"
+          }
+        }
+      }
+    },
+    "/admin/teacher/:id": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy thông tin chi tiết giáo viên",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/teacher/:id ": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Cập nhật thông tin chi tiết giáo viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "fullName",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "birthday",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/teacher ": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Tạo giáo viên",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "fullName",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "birthday",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "name": "gender",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'tạo tài khoản thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/students": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy danh sách học sinh",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "tìm theo tên",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "path",
+            "description": "sort=<tên trường>_<cách sort (1|-1)(asc|desc)>",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Lỗi', error }"
+          }
+        }
+      }
+    },
+    "/admin/student/:id": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy chi tiết học sinh",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/student/:id ": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Cập nhật thông tin học sinh",
+        "description": "",
+        "parameters": [
+          {
+            "name": "studentID",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "fullName",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "birthday",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "gender",
+            "in": "path",
+            "description": "",
+            "type": "boolean",
+            "required": false
+          },
+          {
+            "name": "phone",
+            "in": "path",
+            "description": "",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!'}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/account/lock/:id": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Khoá tài khoản theo id",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Khoá tài khoản thành công!'}"
+          },
+          "403": {
+            "description": "{ message: 'Lỗi', error }"
+          },
+          "401": {
+            "description": "{ message: 'Tài khoản không tồn tại' }"
+          },
+          "409": {
+            "description": "{ message: 'Không được phép' }"
+          }
+        }
+      }
+    },
+    "/admin/account/unlock/:id": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Mở khoá tài khoản theo id",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "{message: 'Mở khoá tài khoản thành công!'}"
+          },
+          "403": {
+            "description": "{ message: 'Lỗi', error }"
+          },
+          "401": {
+            "description": "{ message: 'Tài khoản không tồn tại' }"
+          },
+          "409": {
+            "description": "{ message: 'Không được phép' }"
+          }
+        }
+      }
+    },
+    "/admin/accounts": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy danh sách tài khoản",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "active",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "email",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/account/:id": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy chi tiết tài khoản",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/classes": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy danh sách lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Tên lớp",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "active",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "sort",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!',numOfClass, result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/class/:code": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Lấy chi tiết lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/admin/class/:code ": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "cập nhật thông tin lớp",
+        "description": "",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/users/student/grade ": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Lấy danh sách điểm của học sinh",
+        "description": "",
+        "parameters": [
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    }
+  }
+}
