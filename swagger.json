@@ -502,7 +502,29 @@
         ],
         "summary": "Danh sách các lớp đã tham gia",
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "trạng thái lớp",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "tìm theo tên lớp",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "complete",
+            "in": "path",
+            "description": "lớp đã hoàn thành chưa",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "{message: 'Lấy danh sách khoá học thành công!', myCourses}"
@@ -1629,6 +1651,32 @@
         "responses": {
           "200": {
             "description": "{message: 'Thành công!', result}"
+          },
+          "401": {
+            "description": "{ message: 'Có lỗi xảy ra!', error }"
+          }
+        }
+      }
+    },
+    "/users/teacher/final-course ": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Đánh dấu hoàn thành khoá học, tính gpa cho học sinh",
+        "description": "",
+        "parameters": [
+          {
+            "name": "classCode",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{message: 'Thành công!'}"
           },
           "401": {
             "description": "{ message: 'Có lỗi xảy ra!', error }"

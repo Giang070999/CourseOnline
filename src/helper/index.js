@@ -45,5 +45,5 @@ const isVerifyEmail = async (email, verifyCode) => {
 module.exports = {
   generateVerifyCode,
   isVerifyEmail,
- 
+
 };

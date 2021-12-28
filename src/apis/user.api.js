@@ -13,8 +13,7 @@ userApi.get('/my', passportAuth.jwtAuthentication, userController.getInfoUser)
 userApi.post('/my', passportAuth.jwtAuthentication, userController.postInfoUser)
 
 
-// ========= Student API ==========
-
+// #region ========== STUDENT APIs ===========
 // api: cập nhật studentID
 userApi.post('/student-id', passportAuth.jwtAuthentication, userController.postStudentID)
 
@@ -24,26 +23,21 @@ userApi.post('/join', passportAuth.jwtAuthentication, userController.postJoinCla
 // api: xem danh sách các lớp đã tham gia
 userApi.get('/student/my-courses', passportAuth.jwtAuthentication, userController.getMyCourse)
 
-// api: xem chi tiết 1 lớp
+// api: xem chi tiết 1 lớp (thông tin lớp, giảng viên, danh sách học sinh + phân bổ điểm)
 userApi.get('/student/course/:code', passportAuth.jwtAuthentication, userController.getDetailCourse)
 
-
-// api: xem cấu trúc điểm
-
-// api: xem điểm
+// api: xem điểm (phân bổ điểm + danh sách bài tập trong từng phân bổ điểm + bảng điểm)
 userApi.get('/student/grade', passportAuth.jwtAuthentication, userController.getMyGrade)
 
+// #endregion
 
-// ========= Teacher API ==========
+// #region ========== TEACHER APIs ===========
+
 // ==== class =====
-// api: tạo lớp học
+// api: tạo lớp học (post kèm danh sách học sinh .xlsx)
 userApi.post('/teacher/create-class', passportAuth.jwtAuthentication, storageFile.single('file'), userController.postClass)
 
-// api: nhập danh sách học sinh = file excel
-// userApi.post('/teacher/create-class', passportAuth.jwtAuthentication, storageFile.single('file'), userController.postListStudents)
-
-
-// api: danh sách các lớp đang sở hữu
+// api: danh sách các lớp đang dạy
 userApi.get('/teacher/my-class', passportAuth.jwtAuthentication, userController.getMyClass)
 
 // api: xem chi tiết lớp
@@ -58,7 +52,7 @@ userApi.post('/teacher/class', passportAuth.jwtAuthentication, userController.po
 userApi.get('/teacher/assignments', passportAuth.jwtAuthentication, userController.getAssignments)
 
 // api: lấy chi tiết bài tập của 1 lớp
-userApi.get('/teacher/assignment', passportAuth.jwtAuthentication, userController.getAssignments)
+userApi.get('/teacher/assignment', passportAuth.jwtAuthentication, userController.getAssignment)
 
 // api: thêm bài tập
 userApi.post('/teacher/assignment', passportAuth.jwtAuthentication, storageFile.single('file'), userController.postAssignment)
@@ -82,6 +76,10 @@ userApi.post('/teacher/grade-struct', passportAuth.jwtAuthentication, userContro
 userApi.post('/teacher/grade-struct/update', passportAuth.jwtAuthentication, userController.postUpdateGradeStruct)
 
 // api: tính điểm trung bình cho lớp
+userApi.post('/teacher/final-course', passportAuth.jwtAuthentication, userController.postFinalClass)
 
+
+
+// #endregion
 
 module.exports = userApi

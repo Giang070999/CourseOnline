@@ -49,6 +49,10 @@ const classSchema = new Schema({
         type: Boolean,
         default: true,
         required: true
+    },
+    complete: {
+        type: Boolean,
+        default: false
     }
 
 });

@@ -34,17 +34,21 @@ const gradeSchema = new Schema({
             required: true,
         }
     },
-    mark: {
-        type: Array,
-        grade: {
-            type: String,
-            default: null
-        },
-        cgpa: {
-            type: Number,
-            default: null
-        }
+    gpa: {
+        type: Number,
+        default: null,
     }
+    // mark: {
+    //     type: Array,
+    //     grade: {
+    //         type: String,
+    //         default: null
+    //     },
+    //     cgpa: {
+    //         type: Number,
+    //         default: null
+    //     }
+    // }
 })
 
 const GradeModel = mongoose.model('grade', gradeSchema, 'grades')

@@ -126,7 +126,7 @@ const getMyCourse = async (req, res, next) => {
         const user = req.user
         if (!res.locals.isAuth) return res.status(401).json({ message: "token không hợp lệ!" })
 
-        const { page = 1, limit = 10, active, sort, name } = req.query
+        const { page = 1, limit = 10, active, sort, name, complete } = req.query
         const nSkip = (parseInt(page) - 1) * parseInt(limit)
         // lấy thông tin học sinh
         const student = await StudentModel.findOne({ accountId: user._id })
@@ -134,6 +134,7 @@ const getMyCourse = async (req, res, next) => {
         var query = { studentId: student.studentId }
         let sortBy = {}
         if (active) query.active = active
+        if (complete) query.complete = complete
 
         if (name) {
             let regexp = new RegExp(name, 'i')
@@ -404,7 +405,7 @@ const getDetailClass = async (req, res, next) => {
         var result = await ClassModel.findOne({ code }).select("-_id -__v")
 
         // lấy cấu trúc điểm của lớp đó
-        const gradeStruct = await GradeStructModel.find({ classCode: code })
+        const gradeStruct = await GradeStructModel.find({ classCode: code }).select("-_id -__v")
 
         return res.status(200).json({ message: "Thành công!", result, gradeStruct })
     } catch (error) {
@@ -429,7 +430,8 @@ const postUpdateClass = async (req, res, next) => {
 
         return res.status(200).json({ message: "Cập nhật thành công!" })
     } catch (error) {
-
+        console.log(error);
+        return res.status(401).json({ message: "Lỗi", error })
     }
 }
 
@@ -525,7 +527,7 @@ const getAssignments = async (req, res, next) => {
     try {
         const { classCode } = req.query
 
-        const result = await AssignmentModel.find({ classCode })
+        const result = await AssignmentModel.find({ classCode }).select("-__v -_id")
         return res.status(200).json({ message: "Thành công!", result })
     } catch (error) {
         console.log(error);
@@ -538,7 +540,7 @@ const getAssignment = async (req, res, next) => {
     try {
         const { code } = req.query
 
-        const result = await AssignmentModel.findOne({ code })
+        const result = await AssignmentModel.findOne({ code }).select("-__v -_id")
         return res.status(200).json({ message: "Thành công!", result })
     } catch (error) {
         console.log(error);
@@ -642,9 +644,7 @@ const postAssignmentGrade = async (req, res, next) => {
 
             let scoreRecord = {
                 assignmentCode: code,
-                assignmentName: assignment.name,
                 structCode: struct.code,
-                structName: struct.name,
                 score: data[i][3]
             }
             await GradeModel.updateOne(
@@ -697,6 +697,49 @@ const getGrades = async (req, res, next) => {
     }
 }
 
+// fn: đánh dấu lớp hoàn thành => tính điểm tb cho học sinh
+const postFinalClass = async (req, res, next) => {
+    try {
+        const { classCode } = req.body
+
+        // đánh dấu hoàn thiện khoá học
+        await ClassModel.updateOne({ code: classCode }, { complete: true })
+
+        // tính điểm
+        const gradesOfStudents = await GradeModel.find({ classCode })
+        const structs = await GradeStructModel.find({ classCode })
+
+        // lặp (lọc điểm cùng loại struct -> tính tổng * % của struct đó -> ra %gpa của 1 struct ) 
+        // -> tính tổng các %gpa lại 
+        gradesOfStudents.forEach(async gradeOf1Student => {
+            var scores = gradeOf1Student.scoreRecord // arr điểm của 1 học sinh
+            var gpa = 0
+            structs.forEach(struct => {
+                var sc = scores.filter((score) => {
+                    return score.structCode === struct.code
+                }) // arr điểm của 1 loại struct
+                let tong = 0
+                sc.forEach(item => {
+                    tong += item.score
+                })
+                if (tong > struct.total) tong = struct.total
+                let result = tong * struct.percent / 100
+                gpa += result
+            });
+            //có gpa => update bảng điểm
+            await GradeModel.updateOne({ studentId: gradeOf1Student.studentId },
+                { gpa: gpa.toFixed(2) }
+            )
+            // console.log("calculate GPA for: ", gradeOf1Student.studentId);
+        })
+        return res.status(200).json({ message: "thành công" })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({ message: "Lỗi", error })
+    }
+}
+
 module.exports = {
     getInfoUser,
     postInfoUser,
@@ -722,4 +765,5 @@ module.exports = {
     postUpdateAssignment,
     postAssignmentGrade,
     getGrades,
+    postFinalClass,
 }
