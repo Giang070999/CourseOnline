@@ -32,7 +32,7 @@ const postLogin = async (req, res, next) => {
 
 // ==================== Teacher ========================
 // fn: lấy danh sách teacher và phân trang
-//  get /admin/teachers?limit=10&page=3&name=pham&sort:nameasc
+//  get /admin/teachers?limit=10&page=3&name=pham&sort:name_asc
 const getTeachers = async (req, res, next) => {
     try {
         let isAdmin = res.locals.isAdmin
@@ -47,6 +47,7 @@ const getTeachers = async (req, res, next) => {
             let regexp = new RegExp(name, 'i')
             query.fullName = regexp
         }
+
         if (sort) {
             let field = sort.split("_")[0]
             let value = sort.split("_")[1]
