@@ -504,8 +504,11 @@ const getGradeStruct = async (req, res, next) => {
         const user = req.user
         if (!res.locals.isAuth || user.role !== "teacher") return res.status(401).json({ message: "Không được phép!" })
 
-        const { classCode } = req.query
+        const { classCode, page = 1, limit = 10 } = req.query
+        var nSkip = (parseInt(page) - 1) * parseInt(limit)
         const result = await GradeStructModel.find({ classCode }).select("-_id -__v")
+            .skip(nSkip)
+            .limit(parseInt(limit))
         return res.status(200).json({
             message: "Thành công",
             result
