@@ -44,7 +44,7 @@ userApi.get('/teacher/my-class', passportAuth.jwtAuthentication, userController.
 userApi.get('/teacher/class/:code', passportAuth.jwtAuthentication, userController.getDetailClass)
 
 // api: cập nhật thông tin lớp
-userApi.post('/teacher/class', passportAuth.jwtAuthentication, userController.postUpdateClass)
+userApi.post('/teacher/class', passportAuth.jwtAuthentication, storageFile.single('file'), userController.postUpdateClass)
 
 
 // ==== assignment & grade =====
@@ -71,6 +71,9 @@ userApi.get('/teacher/grade-struct', passportAuth.jwtAuthentication, userControl
 
 // api: thêm 1 grade struct
 userApi.post('/teacher/grade-struct', passportAuth.jwtAuthentication, userController.postGradeStruct)
+
+// api: xoá 1 grade struct
+userApi.post('/teacher/grade-struct/delete', passportAuth.jwtAuthentication, userController.deleteGradeStruct)
 
 // api: sửa 1 grade struct
 userApi.post('/teacher/grade-struct/update', passportAuth.jwtAuthentication, userController.postUpdateGradeStruct)

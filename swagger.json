@@ -615,7 +615,57 @@
                         "name": "file",
                         "in": "path",
                         "description": "file danh sách học sinh",
-                        "required": true,
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Thành công!',code}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra', error }"
+                    },
+                    "403": {
+                        "description": "{ message: token không hợp lệ!' }"
+                    }
+                }
+            }
+        },
+        "/users/teacher/class": {
+            "post": {
+                "tags": [
+                    "teachers"
+                ],
+                "summary": "Cập nhật thông tin lớp học",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "active",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "path",
+                        "description": "file danh sách học sinh",
+                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -950,6 +1000,32 @@
                     },
                     "403": {
                         "description": "{ message: 'Tổng phần trăm vượt quá 100%' }"
+                    }
+                }
+            }
+        },
+        "/users/teacher/grade-struct/delete": {
+            "post": {
+                "tags": [
+                    "teachers"
+                ],
+                "summary": "xoá 1 cấu trúc điểm của 1 lớp",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Xoá thành công!'}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra', error }"
                     }
                 }
             }

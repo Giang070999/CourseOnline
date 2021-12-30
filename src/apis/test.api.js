@@ -33,4 +33,11 @@ testApi.post('/upload', storageFile.single('file'), async (req, res, next) => {
     return res.json(url)
 })
 
+
+testApi.get("/test/:code", (req, res, next) => {
+    console.log('params', req.params);
+    console.log('query', req.query);
+    return res.json("oke")
+})
+
 module.exports = testApi;

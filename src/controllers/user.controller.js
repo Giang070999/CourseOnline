@@ -327,16 +327,19 @@ const postClass = async (req, res, next) => {
         const { name } = req.body
         const file = req.file
         // đọc file lấy danh sách hs
-        const data = await readFileExcel(file.path)
         var students = []
-        for (let i = 1; i < data.length; i++) {
-            let temp = {
-                studentId: data[i][1],
-                fullName: data[i][2],
-                joined: false,
+        if (file) {
+            const data = await readFileExcel(file.path)
+            for (let i = 1; i < data.length; i++) {
+                let temp = {
+                    studentId: data[i][1],
+                    fullName: data[i][2],
+                    joined: false,
+                }
+                students.push(temp)
             }
-            students.push(temp)
         }
+
         const teacher = await TeacherModel.findOne({ accountId: user._id })
         // tạo CODE
         var code = helper.generateVerifyCode(constants.NUMBER_VERIFY_CODE)
@@ -423,6 +426,25 @@ const postUpdateClass = async (req, res, next) => {
 
         // chỉ cho cập nhật tên lớp, số đt, trạng thái lớp (lock/unlock)
         const { code, name, phone, active } = req.body
+        const file = req.file
+
+        if (file) {
+            const data = await readFileExcel(file.path)
+            var students = []
+            for (let i = 1; i < data.length; i++) {
+                let temp = {
+                    studentId: data[i][1],
+                    fullName: data[i][2],
+                    joined: false,
+                }
+                students.push(temp)
+            }
+            await ClassModel.updateOne({ code },
+                { name, phone, active, students }
+            )
+            return res.status(200).json({ message: "Cập nhật thành công!" })
+
+        }
 
         await ClassModel.updateOne({ code },
             { name, phone, active }
@@ -455,6 +477,21 @@ const postGradeStruct = async (req, res, next) => {
             total
         })
         return res.status(200).json({ message: "Thêm thành công!" })
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({ message: "Lỗi", error })
+    }
+}
+
+
+// fn: xoá 1 cấu trúc điểm
+const deleteGradeStruct = async (req, res, next) => {
+    try {
+
+        const { code } = req.body
+
+        await GradeStructModel.deleteOne({ code })
+        return res.status(200).json({ message: "xoá thành công!" })
     } catch (error) {
         console.log(error);
         return res.status(401).json({ message: "Lỗi", error })
@@ -526,8 +563,9 @@ const deleteGradeStruct = async (req, res, next) => {
 const getAssignments = async (req, res, next) => {
     try {
         const { classCode } = req.query
-
-        const result = await AssignmentModel.find({ classCode }).select("-__v -_id")
+        let query = {}
+        if (classCode) query.classCode = classCode
+        const result = await AssignmentModel.find(query).select("-__v -_id")
         return res.status(200).json({ message: "Thành công!", result })
     } catch (error) {
         console.log(error);
@@ -766,4 +804,5 @@ module.exports = {
     postAssignmentGrade,
     getGrades,
     postFinalClass,
+    deleteGradeStruct,
 }
