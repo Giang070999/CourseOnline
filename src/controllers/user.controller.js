@@ -547,16 +547,7 @@ const postUpdateGradeStruct = async (req, res, next) => {
     }
 }
 
-// fn: xoá 1 cấu trúc điểm
-const deleteGradeStruct = async (req, res, next) => {
-    try {
-        const { code } = req.body
-        await GradeStructModel.deleteOne({ code })
-        return res.status(200).json({ message: "xoá thành công!" })
-    } catch (error) {
 
-    }
-}
 
 
 // fn: lấy danh sách bài tập của 1 lớp
