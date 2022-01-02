@@ -595,7 +595,7 @@ const postAssignment = async (req, res, next) => {
         let p = new Date(pending)
         let e = new Date(expired)
         let n = Date.now()
-        if (e >= p || e >= n) {
+        if (e <= p || e <= n) {
             return res.status(403).json({ message: "Thời gian không hợp lệ!" })
         }
 
