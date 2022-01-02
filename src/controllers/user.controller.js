@@ -20,7 +20,8 @@ const uploadAssignmentFile = async (file, code, extension) => {
             folder: `assignment`,
             resource_type: 'raw',
             format: `${extension}`,
-            public_id: `${code}`
+            public_id: `${code}`,
+            flags: `attachment:${code}`,
         });
         const { secure_url } = result;
         return secure_url;
@@ -591,6 +592,12 @@ const postAssignment = async (req, res, next) => {
         // lấy đuôi file
         let arrFilename = file.originalname.split(".")
         let format = arrFilename[arrFilename.length - 1]
+        let p = new Date(pending)
+        let e = new Date(expired)
+        let n = new Date.now()
+        if (e >= p || e >= n) {
+            return res.status(403).json({ message: "Thời gian không hợp lệ!" })
+        }
 
         // lấy thông tin cần thiết
         const teacher = await TeacherModel.findOne({ accountId: user._id })
@@ -660,7 +667,7 @@ const postAssignmentGrade = async (req, res, next) => {
         // upload file điểm lên cloundy
         // const urlFile = uploadGradeFile(file.path, code)
 
-        // đọc file => thêm điểm cho hs
+        // đọc file => thêm điểm cho hs (cột 1 là stt,cột 2 studentId, cột 3 fullName, cột 4 điểm )
         const data = await readFileExcel(file.path)
         for (let i = 1; i < data.length; i++) {
             let studentId = data[i][1]
@@ -679,11 +686,20 @@ const postAssignmentGrade = async (req, res, next) => {
                 structCode: struct.code,
                 score: data[i][3]
             }
+            var isAdded = await GradeModel.findOne({ classCode: classCode, studentId: studentId, "scoreRecord.assignmentCode": code })
+            if (isAdded) {
+                await GradeModel.updateOne(
+                    { classCode: classCode, studentId: studentId },
+                    { $push: { scoreRecord: scoreRecord } }
+                )
+            }
             await GradeModel.updateOne(
                 { classCode: classCode, studentId: studentId },
                 { $push: { scoreRecord: scoreRecord } }
             )
         }
+        // sửa trạng thái bài tập
+        await AssignmentModel.updateOne({ code }, { status: "finalized" })
         return res.status(200).json({ message: "Thành công!" })
     } catch (error) {
         console.log(error);

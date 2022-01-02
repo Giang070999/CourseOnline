@@ -874,6 +874,20 @@
                         "description": "",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "expired",
+                        "in": "path",
+                        "description": "['canceled', 'available', 'finalized', 'hide']",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
