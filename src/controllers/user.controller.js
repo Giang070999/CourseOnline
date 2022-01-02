@@ -20,7 +20,7 @@ const uploadAssignmentFile = async (file, code, extension) => {
             folder: `assignment`,
             resource_type: 'raw',
             format: `${extension}`,
-            public_id: `${code}`,
+            // public_id: `${code}`,
             flags: `attachment:${code}`,
         });
         const { secure_url } = result;
@@ -690,7 +690,7 @@ const postAssignmentGrade = async (req, res, next) => {
             if (isAdded) {
                 await GradeModel.updateOne(
                     { classCode: classCode, studentId: studentId },
-                    { $push: { scoreRecord: scoreRecord } }
+                    { $set: { "scoreRecord.$": scoreRecord } }
                 )
             }
             await GradeModel.updateOne(
