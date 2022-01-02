@@ -20,8 +20,8 @@ const uploadAssignmentFile = async (file, code, extension) => {
             folder: `assignment`,
             resource_type: 'raw',
             format: `${extension}`,
-            // public_id: `${code}`,
-            flags: `attachment:${code}`,
+            public_id: `${code}`,
+            // flags: `attachment:${code}`,
         });
         const { secure_url } = result;
         return secure_url;
@@ -630,7 +630,12 @@ const postUpdateAssignment = async (req, res, next) => {
 
         const { code, name, structCode, pending, expired, status } = req.body
         const file = req.file
-
+        let p = new Date(pending)
+        let e = new Date(expired)
+        let n = Date.now()
+        if (e <= p || e <= n) {
+            return res.status(403).json({ message: "Thời gian không hợp lệ!" })
+        }
         if (file) {
             // lấy đuôi file
             let arrFilename = file.originalname.split(".")
@@ -689,8 +694,8 @@ const postAssignmentGrade = async (req, res, next) => {
             var isAdded = await GradeModel.findOne({ classCode: classCode, studentId: studentId, "scoreRecord.assignmentCode": code })
             if (isAdded) {
                 await GradeModel.updateOne(
-                    { classCode: classCode, studentId: studentId },
-                    { $set: { "scoreRecord.$": scoreRecord } }
+                    { classCode: classCode, studentId: studentId, "scoreRecord.assignmentCode": code },
+                    { $set: { "scoreRecord.$.score": scoreRecord } }
                 )
             }
             await GradeModel.updateOne(
