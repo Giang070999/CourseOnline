@@ -287,12 +287,18 @@ const getMyGrade = async (req, res, next) => {
 
         const { classCode } = req.query
         let query = { studentId }
-        if (classCode) query.classCode = classCode
+        let q = {}
+        if (classCode) {
+            query.classCode = classCode
+            q = { classCode }
+        }
         // lấy bảng điểm
         const result = await GradeModel.find(query).select("-__v -_id")
         // lấy cấu trúc điểm kèm danh sách bài tập
-        const gradeStructs = await GradeStructModel.find({ classCode }).select("-__v -_id")
+
+        const gradeStructs = await GradeStructModel.find(q).select("-__v -_id")
         var structs = [...gradeStructs]
+        console.log(gradeStructs);
         for (let i = 0; i < structs.length; i++) {
             // lấy ds bài tập của từng cấu trúc điểm
             var assignments = await AssignmentModel.find({ structCode: structs[i].code }).select("-__v -_id")

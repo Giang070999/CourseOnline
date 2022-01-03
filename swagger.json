@@ -596,6 +596,32 @@
                 }
             }
         },
+        "/users/student/course/assignments": {
+            "get": {
+                "tags": [
+                    "students"
+                ],
+                "summary": "Lấy danh sách bài tập của 1 lớp",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "classCode",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Thành công!', result, structs}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra!', error }"
+                    }
+                }
+            }
+        },
         "/users/teacher/create-class": {
             "post": {
                 "tags": [
