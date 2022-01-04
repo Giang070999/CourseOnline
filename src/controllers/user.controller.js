@@ -436,6 +436,7 @@ const postUpdateClass = async (req, res, next) => {
         const file = req.file
 
         if (file) {
+            console.log("> message: có file danh sách");
             const data = await readFileExcel(file.path)
             var students = []
             for (let i = 1; i < data.length; i++) {
