@@ -216,7 +216,7 @@ const postStudentID = async (req, res, next) => {
         }
 
         return res.status(200).json({
-            message: "POST StudentID Thành công!"
+            message: "Cập nhật Thành công!"
         })
     } catch (error) {
         console.log(error);
@@ -449,6 +449,7 @@ const postUpdateClass = async (req, res, next) => {
             await ClassModel.updateOne({ code },
                 { name, phone, active, students }
             )
+            console.log("> message: cập nhật danh sách lớp thành công!");
             return res.status(200).json({ message: "Cập nhật thành công!" })
 
         }
@@ -456,7 +457,7 @@ const postUpdateClass = async (req, res, next) => {
         await ClassModel.updateOne({ code },
             { name, phone, active }
         )
-
+        console.log("> message: cập nhật thông tin lớp thành công!");
         return res.status(200).json({ message: "Cập nhật thành công!" })
     } catch (error) {
         console.log(error);
