@@ -434,7 +434,7 @@ const postUpdateClass = async (req, res, next) => {
         // chỉ cho cập nhật tên lớp, số đt, trạng thái lớp (lock/unlock)
         const { code, name, phone, active } = req.body
         const file = req.file
-        console.log("> message: file đính kèm", file);
+        console.log("> message: data", req.body);
 
         if (file) {
             console.log("> message: có file danh sách");
