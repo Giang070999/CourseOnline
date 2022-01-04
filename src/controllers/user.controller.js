@@ -245,15 +245,23 @@ const postJoinClass = async (req, res, next) => {
         const joined = await MyCourseModel.findOne({ studentId: student.studentId, classCode: code })
         if (joined) return res.status(200).json({ message: "Đã tham gia lớp này rồi!" })
 
-        // thêm student vào lớp
-        let studentsTemp = {
-            studentId: student.studentId,
-            fullName: student.fullName
+        // thêm student vào lớp nếu chưa có trong ds , có rồi thì update status thành joined
+
+        const isJoinedInClass = await ClassModel.find({ code, "students.studentId": student.studentId })
+        if (isJoinedInClass) {
+            await ClassModel.updateOne({ code },
+                { $set: { "students.$.joined": true } }
+            )
+        } else {
+            let studentsTemp = {
+                studentId: student.studentId,
+                fullName: student.fullName
+            }
+            await ClassModel.updateOne(
+                { code },
+                { $push: { students: studentsTemp } }
+            )
         }
-        await ClassModel.updateOne(
-            { code },
-            { $push: { students: studentsTemp } }
-        )
 
         // thêm lớp vào mycourse
         const myCourse = await MyCourseModel.create({
