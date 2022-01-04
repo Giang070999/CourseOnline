@@ -667,6 +667,13 @@
                 "description": "",
                 "parameters": [
                     {
+                        "name": "code",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "name": "name",
                         "in": "path",
                         "description": "",

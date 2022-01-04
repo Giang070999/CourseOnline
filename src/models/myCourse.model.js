@@ -7,11 +7,11 @@ const myCourseSchema = new Schema({
         type: String,
         required: true
     },
-    // classId: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "class",
-    //     required: true
-    // },
+    classId: {
+        type: Schema.Types.ObjectId,
+        ref: "class",
+        required: true
+    },
     classCode: {
         type: String,
         required: true
