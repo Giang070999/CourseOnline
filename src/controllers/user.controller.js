@@ -448,10 +448,12 @@ const postUpdateClass = async (req, res, next) => {
                 }
                 students.push(temp)
             }
-            await ClassModel.updateOne({ code },
+            console.log("> message: danh sách học viên", students);
+
+            const newClass = await ClassModel.updateOne({ code },
                 { name, phone, active, students }
             )
-            console.log("> message: cập nhật danh sách lớp thành công!");
+            console.log("> message: cập nhật danh sách lớp thành công!", newClass);
             return res.status(200).json({ message: "Cập nhật thành công!" })
 
         }
