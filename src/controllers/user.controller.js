@@ -209,11 +209,11 @@ const postStudentID = async (req, res, next) => {
             { accountId: user._id },
             { studentId }
         )
-        // kiểm ra mycourse
-        const myCourse = await MyCourseModel.findOne({ studentId })
-        if (!myCourse) {
-            await MyCourseModel.create({ studentId })
-        }
+        // // kiểm ra mycourse
+        // const myCourse = await MyCourseModel.findOne({ studentId })
+        // if (!myCourse) {
+        //     await MyCourseModel.create({ studentId })
+        // }
 
         return res.status(200).json({
             message: "Cập nhật Thành công!"
