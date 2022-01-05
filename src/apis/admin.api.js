@@ -17,6 +17,7 @@ adminApi.post('/login', adminController.postLogin)
 
 // ============================= TEACHER ==================================
 // api: lấy danh sách giáo viên và phân trang
+// adminApi.get("/teachers", adminController.getTeachers)
 adminApi.get("/teachers", passportAuth.jwtAuthentication, adminController.getTeachers)
 
 // api: lấy chi tiết teacher 
@@ -54,8 +55,8 @@ adminApi.post("/account/unlock/:id", passportAuth.jwtAuthentication, adminContro
 adminApi.post("/account/change-pw", passportAuth.jwtAuthentication, adminController.postChangePassword)
 
 // api: lấy danh sách tài khoản
-adminApi.get("/accounts", adminController.getAccounts)
-// adminApi.get("/accounts", passportAuth.jwtAuthentication, adminController.getAccounts)
+// adminApi.get("/accounts", adminController.getAccounts)
+adminApi.get("/accounts", passportAuth.jwtAuthentication, adminController.getAccounts)
 
 // api: lấy chi tiết tài khoản
 adminApi.get("/account/:id", passportAuth.jwtAuthentication, adminController.getDetailAccount)

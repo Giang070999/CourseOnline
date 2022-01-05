@@ -35,8 +35,8 @@ const postLogin = async (req, res, next) => {
 //  get /admin/teachers?limit=10&page=3&name=pham&sort:name_asc
 const getTeachers = async (req, res, next) => {
     try {
-        let isAdmin = res.locals.isAdmin
-        if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
+        // let isAdmin = res.locals.isAdmin
+        // if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
 
         const { page = 1, limit = 10, name, sort } = req.query
         const nSkip = (parseInt(page) - 1) * parseInt(limit)
@@ -54,7 +54,7 @@ const getTeachers = async (req, res, next) => {
             sortBy = [[field, value]]
         }
         const numOfTeacher = await TeacherModel.countDocuments(query)
-        const result = await TeacherModel.find(query).select('-__v')
+        const result = await TeacherModel.find(query).populate("accountId", 'email authType role').select('-__v -_id')
             .skip(nSkip)
             .limit(parseInt(limit))
             .sort(sortBy)
@@ -81,7 +81,7 @@ const getDetailTeacher = async (req, res, next) => {
         let isAdmin = res.locals.isAdmin
         if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
         const { id } = req.params
-        const result = await TeacherModel.findOne({ accountId: id })
+        const result = await TeacherModel.findOne({ accountId: id }).populate("accountId")
         return res.status(200).json({ message: "Thành công!", result })
     } catch (error) {
         console.log(error);
@@ -161,7 +161,7 @@ const getStudents = async (req, res, next) => {
             sortBy = [[field, value]]
         }
         const numOfStudent = await StudentModel.countDocuments(query)
-        const result = await StudentModel.find(query).select('-__v')
+        const result = await StudentModel.find(query).select('-__v').populate("accountId", 'email authType role')
             .skip(nSkip)
             .limit(parseInt(limit))
             .sort(sortBy)
@@ -188,7 +188,7 @@ const getDetailStudent = async (req, res, next) => {
         let isAdmin = res.locals.isAdmin
         if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
         const { id } = req.params
-        const result = await StudentModel.findOne({ accountId: id })
+        const result = await StudentModel.findOne({ accountId: id }).populate("accountId")
         return res.status(200).json({ message: "Thành công!", result })
     } catch (error) {
         console.log(error);

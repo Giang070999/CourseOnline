@@ -1709,6 +1709,39 @@
                 }
             }
         },
+        "/admin/account/change-pw": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Đổi mật khẩu tài khoản",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Thành công!'}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra!', error }"
+                    }
+                }
+            }
+        },
         "/admin/classes": {
             "get": {
                 "tags": [
