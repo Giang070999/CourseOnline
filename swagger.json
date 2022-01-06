@@ -1710,7 +1710,7 @@
             }
         },
         "/admin/account/change-pw": {
-            "get": {
+            "post": {
                 "tags": [
                     "admin"
                 ],

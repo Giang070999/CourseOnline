@@ -285,7 +285,7 @@ const postChangePassword = async (req, res, next) => {
             password,
             parseInt(process.env.SALT_ROUND),
         );
-        AccountModel.updateOne(
+        await AccountModel.updateOne(
             { email },
             { password: hashPassword }
         )
