@@ -192,7 +192,7 @@ const postChangePassword = async (req, res, next) => {
     try {
         // check account => hash password => change password
 
-        const { verifyCode, password } = req.body
+        const { email, verifyCode, password } = req.body
 
         const account = await AccountModel.findOne({ email })
         if (!account) {

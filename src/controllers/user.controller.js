@@ -300,6 +300,8 @@ const getMyGrade = async (req, res, next) => {
             query.classCode = classCode
             q = { classCode }
         }
+        // check khoá học kết thúc chưa?
+
         // lấy bảng điểm
         const result = await GradeModel.find(query).select("-__v -_id")
         // lấy cấu trúc điểm kèm danh sách bài tập
