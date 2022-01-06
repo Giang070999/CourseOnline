@@ -35,8 +35,8 @@ const postLogin = async (req, res, next) => {
 //  get /admin/teachers?limit=10&page=3&name=pham&sort:name_asc
 const getTeachers = async (req, res, next) => {
     try {
-        // let isAdmin = res.locals.isAdmin
-        // if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
+        let isAdmin = res.locals.isAdmin
+        if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
 
         const { page = 1, limit = 10, name, sort } = req.query
         const nSkip = (parseInt(page) - 1) * parseInt(limit)
@@ -364,7 +364,8 @@ const postUpdateClass = async (req, res, next) => {
         let isAdmin = res.locals.isAdmin
         if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
 
-        const { code, active, name } = req.body
+        const { active, name } = req.body
+        const { code } = req.params
         // kiểm tra có tồn tại lớp?
         const classs = await ClassModel.findOne({ code })
         if (!classs) return res.status(403).json({ message: "Mã lớp không tồn tại" })
