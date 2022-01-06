@@ -299,8 +299,8 @@ const postChangePassword = async (req, res, next) => {
 // fn: danh sách tài khoản
 const getAccounts = async (req, res, next) => {
     try {
-        // let isAdmin = res.locals.isAdmin
-        // if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
+        let isAdmin = res.locals.isAdmin
+        if (!isAdmin) return res.status(401).json({ message: "Không được phép" })
 
         const { page = 1, limit = 10, email, active, role, sort } = req.query
         const nSkip = (parseInt(page) - 1) * parseInt(limit)
@@ -320,7 +320,7 @@ const getAccounts = async (req, res, next) => {
         }
 
         const numOfAccount = await AccountModel.countDocuments(query)
-        const result = await AccountModel.find(query).select("-refreshToken -_id -__v -password")
+        const result = await AccountModel.find(query).select("-refreshToken -__v -password")
             .skip(nSkip)
             .limit(parseInt(limit))
             .sort(sortBy)
