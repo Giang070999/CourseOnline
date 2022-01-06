@@ -255,7 +255,8 @@ const postJoinClass = async (req, res, next) => {
         } else {
             let studentsTemp = {
                 studentId: student.studentId,
-                fullName: student.fullName
+                fullName: student.fullName,
+                joined: true
             }
             await ClassModel.updateOne(
                 { code },
@@ -343,14 +344,14 @@ const postClass = async (req, res, next) => {
         if (!res.locals.isAuth || user.role !== "teacher") return res.status(401).json({ message: "Không được phép!" })
         const { name } = req.body
         const file = req.file
-        // đọc file lấy danh sách hs
+        // đọc file lấy danh sách hs (cột 1 là mã hs, cột 2 tên hs)
         var students = []
         if (file) {
             const data = await readFileExcel(file.path)
             for (let i = 1; i < data.length; i++) {
                 let temp = {
-                    studentId: data[i][1],
-                    fullName: data[i][2],
+                    studentId: data[i][0],
+                    fullName: data[i][1],
                     joined: false,
                 }
                 students.push(temp)
@@ -441,33 +442,29 @@ const postUpdateClass = async (req, res, next) => {
         const user = req.user
         if (!res.locals.isAuth || user.role !== "teacher") return res.status(401).json({ message: "Không được phép!" })
 
-        // chỉ cho cập nhật tên lớp, số đt, trạng thái lớp (lock/unlock)
+        // chỉ cho cập nhật tên lớp, số đt, trạng thái lớp (lock/unlock) và ds hs
         const { code, name, phone, active } = req.body
         const file = req.file
-        console.log("> message: data", req.body);
 
         if (file) {
-            console.log("> message: có file danh sách");
             const data = await readFileExcel(file.path)
             var students = []
             for (let i = 1; i < data.length; i++) {
                 let temp = {
-                    studentId: data[i][1],
-                    fullName: data[i][2],
-                    joined: false,
+                    studentId: data[i][0],
+                    fullName: data[i][1],
+                    joined: data[i][2] ? data[i][2] : false,
                 }
                 students.push(temp)
             }
-            console.log("> message: danh sách học viên", students);
 
-            const newClass = await ClassModel.updateOne({ code },
+            await ClassModel.updateOne({ code },
                 { name, phone, active, students }
             )
-            console.log("> message: cập nhật danh sách lớp thành công!", newClass);
+            console.log("> message: cập nhật danh sách lớp thành công!");
             return res.status(200).json({ message: "Cập nhật thành công!" })
 
         }
-        console.log("> message: Không có file danh sách!");
 
         await ClassModel.updateOne({ code },
             { name, phone, active }
@@ -694,11 +691,11 @@ const postAssignmentGrade = async (req, res, next) => {
         // upload file điểm lên cloundy
         // const urlFile = uploadGradeFile(file.path, code)
 
-        // đọc file => thêm điểm cho hs (cột 1 là stt,cột 2 studentId, cột 3 fullName, cột 4 điểm )
+        // đọc file => thêm điểm cho hs (cột 1 studentId, cột 2 fullName, cột 3 joined, cột 4 điểm )
         const data = await readFileExcel(file.path)
         for (let i = 1; i < data.length; i++) {
-            let studentId = data[i][1]
-            let fullName = data[i][2]
+            let studentId = data[i][0]
+            let fullName = data[i][1]
             let grade = await GradeModel.findOne({ classCode: classCode, studentId: studentId })
             if (!grade) {
                 await GradeModel.create({ classCode: classCode, studentId: studentId, fullName: fullName })
