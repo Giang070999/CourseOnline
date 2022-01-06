@@ -693,38 +693,43 @@ const postAssignmentGrade = async (req, res, next) => {
 
         // đọc file => thêm điểm cho hs (cột 1 studentId, cột 2 fullName, cột 3 joined, cột 4 điểm )
         const data = await readFileExcel(file.path)
-        for (let i = 1; i < data.length; i++) {
-            let studentId = data[i][0]
-            let fullName = data[i][1]
-            let grade = await GradeModel.findOne({ classCode: classCode, studentId: studentId })
-            if (!grade) {
-                await GradeModel.create({ classCode: classCode, studentId: studentId, fullName: fullName })
-            }
-            // lấy info bài tập
-            const assignment = await AssignmentModel.findOne({ code })
-            // lấy info cấu trúc điểm
-            const struct = await GradeStructModel.findOne({ code: assignment.structCode })
+        const classs = await ClassModel.findOne({ code: classCode })
+        if (classs.students.length + 1 == data.length) {
+            for (let i = 1; i < data.length; i++) {
+                let studentId = data[i][0]
+                let fullName = data[i][1]
+                let grade = await GradeModel.findOne({ classCode: classCode, studentId: studentId })
+                if (!grade) {
+                    await GradeModel.create({ classCode: classCode, studentId: studentId, fullName: fullName })
+                }
+                // lấy info bài tập
+                const assignment = await AssignmentModel.findOne({ code })
+                // lấy info cấu trúc điểm
+                const struct = await GradeStructModel.findOne({ code: assignment.structCode })
 
-            let scoreRecord = {
-                assignmentCode: code,
-                structCode: struct.code,
-                score: data[i][3]
-            }
-            var isAdded = await GradeModel.findOne({ classCode: classCode, studentId: studentId, "scoreRecord.assignmentCode": code })
-            if (isAdded) {
+                let scoreRecord = {
+                    assignmentCode: code,
+                    structCode: struct.code,
+                    score: data[i][3]
+                }
+                var isAdded = await GradeModel.findOne({ classCode: classCode, studentId: studentId, "scoreRecord.assignmentCode": code })
+                if (isAdded) {
+                    await GradeModel.updateOne(
+                        { classCode: classCode, studentId: studentId, "scoreRecord.assignmentCode": code },
+                        { $set: { "scoreRecord.$.score": data[i][3] } }
+                    )
+                }
                 await GradeModel.updateOne(
-                    { classCode: classCode, studentId: studentId, "scoreRecord.assignmentCode": code },
-                    { $set: { "scoreRecord.$.score": scoreRecord } }
+                    { classCode: classCode, studentId: studentId },
+                    { $push: { scoreRecord: scoreRecord } }
                 )
             }
-            await GradeModel.updateOne(
-                { classCode: classCode, studentId: studentId },
-                { $push: { scoreRecord: scoreRecord } }
-            )
+            // sửa trạng thái bài tập
+            await AssignmentModel.updateOne({ code }, { status: "finalized" })
+            return res.status(200).json({ message: "Thành công!" })
         }
-        // sửa trạng thái bài tập
-        await AssignmentModel.updateOne({ code }, { status: "finalized" })
-        return res.status(200).json({ message: "Thành công!" })
+        return res.status(401).json({ message: "Lỗi file không hợp lệ!" })
+
     } catch (error) {
         console.log(error);
         return res.status(401).json({ message: "Lỗi", error })
