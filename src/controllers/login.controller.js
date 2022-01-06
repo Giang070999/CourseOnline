@@ -14,8 +14,8 @@ const postLogin = async (req, res, next) => {
 
         // kiểm tra tài khoản có tồn tại không?
         const account = await AccountModel.findOne({
-            email,
-            authType: 'local'
+            email
+            // authType: 'local'
         })
         if (!account) return res.status(401).json({
             message: "Tài khoản không tồn tại!",
