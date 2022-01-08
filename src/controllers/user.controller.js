@@ -306,7 +306,7 @@ const getMyGrade = async (req, res, next) => {
         // check khoá học kết thúc chưa?
         const classs = await ClassModel.findOne({ code: classCode })
         console.log('classs.complete', classs.complete);
-        if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
+        // if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
 
         // lấy bảng điểm
         const result = await GradeModel.find(query).select("-__v -_id")
@@ -616,7 +616,7 @@ const postAssignment = async (req, res, next) => {
         const user = req.user
         if (!res.locals.isAuth || user.role !== "teacher") return res.status(401).json({ message: "Không được phép!" })
 
-        const { classCode, name, structCode, pending, expired } = req.body
+        const { classCode, name, structCode, pending, expired, note } = req.body
         const file = req.file
         // lấy đuôi file
         let arrFilename = file.originalname.split(".")
@@ -641,7 +641,8 @@ const postAssignment = async (req, res, next) => {
             name,
             structCode,
             pending,
-            expired
+            expired,
+            note
         })
         return res.status(200).json({ message: "Thành công!", fileUrl })
 
@@ -657,7 +658,7 @@ const postUpdateAssignment = async (req, res, next) => {
         const user = req.user
         if (!res.locals.isAuth || user.role !== "teacher") return res.status(401).json({ message: "Không được phép!" })
 
-        const { code, name, structCode, pending, expired, status } = req.body
+        const { code, name, structCode, pending, expired, status, note } = req.body
         const file = req.file
         let p = new Date(pending)
         let e = new Date(expired)
@@ -673,14 +674,14 @@ const postUpdateAssignment = async (req, res, next) => {
             const fileUrl = await uploadAssignmentFile(file.path, code, format)
             //  update bài tập
             await AssignmentModel.updateOne({ code },
-                { name, attachFile: fileUrl, structCode, pending, expired, status }
+                { name, attachFile: fileUrl, structCode, pending, expired, status, note }
             )
             return res.status(200).json({ message: "Cập nhật thành công!" })
         }
 
         //  update bài tập
         await AssignmentModel.updateOne({ code },
-            { name, structCode, pending, expired, status }
+            { name, structCode, pending, expired, status, note }
         )
         return res.status(200).json({ message: "Cập nhật thành công!" })
 

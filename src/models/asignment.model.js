@@ -13,6 +13,10 @@ const asignmentSchema = new Schema({
         trim: true,
         required: true,
     },
+    note: {
+        type: String,
+        default: ""
+    },
     classCode: {
         type: String,
         required: true,
