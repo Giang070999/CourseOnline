@@ -305,7 +305,8 @@ const getMyGrade = async (req, res, next) => {
         }
         // check khoá học kết thúc chưa?
         const classs = await ClassModel.findOne({ code: classCode })
-        if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
+        // console.log(classs.complete);
+        // if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
 
         // lấy bảng điểm
         const result = await GradeModel.find(query).select("-__v -_id")
