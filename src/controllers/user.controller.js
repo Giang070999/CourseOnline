@@ -579,8 +579,11 @@ const getAssignments = async (req, res, next) => {
         const { classCode } = req.query
         let query = {}
         if (classCode) query.classCode = classCode
+        // get struct
+        const structs = await GradeStructModel.find(query).select("-__v -_id")
         const result = await AssignmentModel.find(query).select("-__v -_id")
-        return res.status(200).json({ message: "Thành công!", result })
+        console.log("ok");
+        return res.status(200).json({ message: "Thành công!", result, structs })
     } catch (error) {
         console.log(error);
         return res.status(401).json({ message: "Lỗi", error })

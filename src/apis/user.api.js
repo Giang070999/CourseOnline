@@ -23,11 +23,13 @@ userApi.post('/join', passportAuth.jwtAuthentication, userController.postJoinCla
 // api: xem danh sách các lớp đã tham gia
 userApi.get('/student/my-courses', passportAuth.jwtAuthentication, userController.getMyCourse)
 
+// api: xem danh sách bài tập
+// userApi.get('/student/course/assignments', userController.getAssignments)
+userApi.get('/student/course/assignments', passportAuth.jwtAuthentication, userController.getAssignments)
+
 // api: xem chi tiết 1 lớp (thông tin lớp, giảng viên, danh sách học sinh + phân bổ điểm)
 userApi.get('/student/course/:code', passportAuth.jwtAuthentication, userController.getDetailCourse)
 
-// api: xem danh sách bài tập
-userApi.get('/student/course/assignments', passportAuth.jwtAuthentication, userController.getAssignments)
 
 // api: xem điểm (phân bổ điểm + danh sách bài tập trong từng phân bổ điểm + bảng điểm)
 userApi.get('/student/grade', passportAuth.jwtAuthentication, userController.getMyGrade)
@@ -67,6 +69,7 @@ userApi.post('/teacher/assignment/update', passportAuth.jwtAuthentication, stora
 userApi.post('/teacher/assignment/grade', passportAuth.jwtAuthentication, storageFile.single('file'), userController.postAssignmentGrade)
 
 // api: lấy danh sách điểm của học sinh trong 1 lớp
+// userApi.get('/teacher/grades/',  userController.getGrades)
 userApi.get('/teacher/grades/', passportAuth.jwtAuthentication, userController.getGrades)
 
 // api: lấy cấu trúc điểm của 1 lớp
