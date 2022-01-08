@@ -25,6 +25,11 @@ const myCourseSchema = new Schema({
         default: true,
         required: true
     },
+    complete: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
     teacher: {
         type: String,
         required: true
