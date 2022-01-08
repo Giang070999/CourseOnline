@@ -52,7 +52,8 @@ const classSchema = new Schema({
     },
     complete: {
         type: Boolean,
-        default: false
+        default: false,
+        required: true
     }
 
 });
