@@ -724,6 +724,13 @@
                 "description": "",
                 "parameters": [
                     {
+                        "name": "complete",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "page",
                         "in": "path",
                         "description": "",

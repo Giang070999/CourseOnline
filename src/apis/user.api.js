@@ -84,7 +84,7 @@ userApi.post('/teacher/grade-struct/delete', passportAuth.jwtAuthentication, use
 // api: sửa 1 grade struct
 userApi.post('/teacher/grade-struct/update', passportAuth.jwtAuthentication, userController.postUpdateGradeStruct)
 
-// api: tính điểm trung bình cho lớp
+// api: tính điểm trung bình cho lớp => final course
 userApi.post('/teacher/final-course', passportAuth.jwtAuthentication, userController.postFinalClass)
 
 

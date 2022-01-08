@@ -87,6 +87,8 @@ const postLoginWithGoogle = async (req, res, next) => {
     try {
         const { user } = req
         console.log("user: ", user);
+        if (!user.active) return res.status(401).json({ message: "Tài khoản đã bị khoá!" })
+
         // tạo refreshToken 
         const refreshToken = await jwtConfig.encodedToken(
             process.env.JWT_SECRET_REFRESH_KEY,

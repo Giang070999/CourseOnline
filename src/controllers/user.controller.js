@@ -302,6 +302,8 @@ const getMyGrade = async (req, res, next) => {
             q = { classCode }
         }
         // check khoá học kết thúc chưa?
+        const classs = await ClassModel.findOne({ code: classCode, complete: true })
+        if (!classs) return res.status(401).json({ message: "Chưa thể xem điểm." })
 
         // lấy bảng điểm
         const result = await GradeModel.find(query).select("-__v -_id")
@@ -387,10 +389,11 @@ const getMyClass = async (req, res, next) => {
         const user = req.user
         if (!res.locals.isAuth || user.role !== "teacher") return res.status(401).json({ message: "Không được phép!" })
 
-        const { active, page = 1, limit = 10, sort, name } = req.query
+        const { active, page = 1, limit = 10, sort, name, complete } = req.query
         const nSkip = (parseInt(page) - 1) * parseInt(limit)
         let query = { accountId: user._id }
         let sortBy = {}
+        if (complete) query.complete = complete
         if (active) query.active = active
         if (name) {
             let regexp = new RegExp(name, 'i')
@@ -782,6 +785,9 @@ const postFinalClass = async (req, res, next) => {
     try {
         const { classCode } = req.body
 
+        // checkk complete
+        let classs = await ClassModel.findOne({ code: classCode, complete: true })
+        if (classs) return res.status(401).json({ message: "Khoá học đã kết thúc, vui lòng thử lại." })
         // đánh dấu hoàn thiện khoá học
         await ClassModel.updateOne({ code: classCode }, { complete: true })
 
