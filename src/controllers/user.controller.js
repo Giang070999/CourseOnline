@@ -297,6 +297,7 @@ const getMyGrade = async (req, res, next) => {
         const studentId = student.studentId
 
         const { classCode } = req.query
+
         let query = { studentId }
         let q = {}
         if (classCode) {
@@ -305,7 +306,7 @@ const getMyGrade = async (req, res, next) => {
         }
         // check khoá học kết thúc chưa?
         const classs = await ClassModel.findOne({ code: classCode })
-        console.log('classs.complete', classs);
+        console.log('classs.complete', classCode, classs);
         // if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
 
         // lấy bảng điểm
