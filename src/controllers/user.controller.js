@@ -248,11 +248,13 @@ const postJoinClass = async (req, res, next) => {
         // thêm student vào lớp nếu chưa có trong ds , có rồi thì update status thành joined
 
         const isJoinedInClass = await ClassModel.find({ code, "students.studentId": student.studentId })
+        console.log(isJoinedInClass);
         if (isJoinedInClass) {
             await ClassModel.updateOne({ code },
                 { $set: { "students.$.joined": true } }
             )
         } else {
+
             let studentsTemp = {
                 studentId: student.studentId,
                 fullName: student.fullName,
@@ -304,7 +306,7 @@ const getMyGrade = async (req, res, next) => {
         }
         // check khoá học kết thúc chưa?
         const classs = await ClassModel.findOne({ code: classCode, complete: true })
-        if (!classs) return res.status(401).json({ message: "Chưa thể xem điểm." })
+        if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
 
         // lấy bảng điểm
         const result = await GradeModel.find(query).select("-__v -_id")
