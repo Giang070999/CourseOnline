@@ -269,7 +269,8 @@ const postJoinClass = async (req, res, next) => {
             studentId: student.studentId,
             classCode: code,
             className: classs.name,
-            teacher: classs.teacher
+            teacher: classs.teacher,
+            complete: classs.complete
         })
         console.log('myCourse:', myCourse);
         return res.status(200).json({ message: "Tham gia thành công!" })
@@ -472,6 +473,8 @@ const postUpdateClass = async (req, res, next) => {
         await ClassModel.updateOne({ code },
             { name, phone, active }
         )
+        // update info in myCourse
+        await MyCourseModel.updateMany({ classCode: code }, { active })
         console.log("> message: cập nhật thông tin lớp thành công!");
         return res.status(200).json({ message: "Cập nhật thành công!" })
     } catch (error) {
@@ -790,6 +793,8 @@ const postFinalClass = async (req, res, next) => {
         if (classs) return res.status(401).json({ message: "Khoá học đã kết thúc, vui lòng thử lại." })
         // đánh dấu hoàn thiện khoá học
         await ClassModel.updateOne({ code: classCode }, { complete: true })
+        // đánh dấu hoàn thiện khoá học cho hs
+        await MyCourseModel.updateMany({ classCode }, { complete: true })
 
         // tính điểm
         const gradesOfStudents = await GradeModel.find({ classCode })
