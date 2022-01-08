@@ -250,11 +250,10 @@ const postJoinClass = async (req, res, next) => {
         const isJoinedInClass = await ClassModel.find({ code, "students.studentId": student.studentId })
         console.log(isJoinedInClass);
         if (isJoinedInClass) {
-            await ClassModel.updateOne({ code },
+            await ClassModel.updateOne({ code, "students.studentId": student.studentId },
                 { $set: { "students.$.joined": true } }
             )
         } else {
-
             let studentsTemp = {
                 studentId: student.studentId,
                 fullName: student.fullName,
