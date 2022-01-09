@@ -857,6 +857,13 @@
                         "description": "",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "note",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -1974,7 +1981,55 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{message: 'Thành công!', result}"
+                        "description": "{message: 'Thành công!'}",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "_id": "objectId",
+                                            "student": {
+                                                "type": "object"
+                                            },
+                                            "teacher": {
+                                                "type": "object"
+                                            },
+                                            "class": {
+                                                "type": "object"
+                                            },
+                                            "assignemt": {
+                                                "type": "object"
+                                            },
+                                            "complete": {
+                                                "type": "boolean"
+                                            },
+                                            "comments": {
+                                                "type": "array",
+                                                "name": "hoàng nam",
+                                                "content": "this is test",
+                                                "createAt": "Sun Jan 09 2022 15:07:29 GMT+0700"
+                                            }
+                                        },
+                                        "examples": {
+                                            "student": "ObjectId()",
+                                            "teacher": "ObjectId()",
+                                            "class": "ObjectId()",
+                                            "assignment": "ObjectId()",
+                                            "complete": true,
+                                            "comments": [
+                                                {
+                                                    "name": "Hoàng Nam",
+                                                    "content": "this is test",
+                                                    "createAt": "Sun Jan 09 2022 15:07:29 GMT+0700"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "{ message: 'Có lỗi xảy ra!', error }"

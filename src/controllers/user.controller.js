@@ -922,7 +922,7 @@ const postCompleteReview = async (req, res, next) => {
 const getMyReview = async (req, res, next) => {
     try {
         const account = req.user
-        const { page = 1, limit = 12, complete, sort } = req.query
+        const { page = 1, limit = 12, id, complete, sort } = req.query
 
         var nSkip = (parseInt(page) - 1) * parseInt(limit)
         var query = {}
@@ -930,6 +930,7 @@ const getMyReview = async (req, res, next) => {
         var user = {}
         var result = {}
 
+        if (id) query._id = id
         if (complete) query.complete = complete
         if (sort) {
             let field = sort.split("_")[0]

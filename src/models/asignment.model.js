@@ -15,6 +15,7 @@ const asignmentSchema = new Schema({
     },
     note: {
         type: String,
+        required: true,
         default: ""
     },
     classCode: {
@@ -29,7 +30,7 @@ const asignmentSchema = new Schema({
     },
     attachFile: {
         type: String,
-        required: true
+
     },
     structCode: {
         type: String,
