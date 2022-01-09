@@ -619,9 +619,7 @@ const postAssignment = async (req, res, next) => {
 
         const { classCode, name, structCode, pending, expired, note } = req.body
         const file = req.file
-        // lấy đuôi file
-        let arrFilename = file.originalname.split(".")
-        let format = arrFilename[arrFilename.length - 1]
+
         let p = new Date(pending)
         let e = new Date(expired)
         let n = Date.now()
@@ -630,9 +628,15 @@ const postAssignment = async (req, res, next) => {
         }
 
         // lấy thông tin cần thiết
+        // lấy đuôi file
         const teacher = await TeacherModel.findOne({ accountId: user._id })
         const code = helper.generateVerifyCode(constants.NUMBER_VERIFY_CODE)
-        const fileUrl = await uploadAssignmentFile(file.path, code, format)
+        var fileUrl = ""
+        if (file) {
+            let arrFilename = file.originalname.split(".")
+            var format = arrFilename[arrFilename.length - 1]
+            fileUrl = await uploadAssignmentFile(file.path, code, format)
+        }
         // tạo assignment
         await AssignmentModel.create({
             owner: teacher._id,
