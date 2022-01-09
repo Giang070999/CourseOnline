@@ -91,4 +91,19 @@ userApi.post('/teacher/final-course', passportAuth.jwtAuthentication, userContro
 
 // #endregion
 
+
+// #region =========== REVIEW =============
+
+// api: get my review
+userApi.get('/reviews', passportAuth.jwtAuthentication, userController.getMyReview)
+
+// api: post an new review
+userApi.post('/review', passportAuth.jwtAuthentication, userController.postReview)
+
+// api: post rep an review
+userApi.post('/review-rep', passportAuth.jwtAuthentication, userController.postRepReview)
+
+// api: post complete an review
+userApi.post('/review-complete', passportAuth.jwtAuthentication, userController.postCompleteReview)
+
 module.exports = userApi

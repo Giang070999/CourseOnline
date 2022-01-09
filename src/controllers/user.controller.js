@@ -11,7 +11,7 @@ const { cloudinary } = require('../configs/cloudinary.config');
 const readFileExcel = require('read-excel-file/node');
 const GradeModel = require('../models/grade.model')
 const GradeStructModel = require('../models/gradeStruct.model')
-
+const ReviewModel = require("../models/review.model")
 
 // fn: upload assignment file to cloudinary
 const uploadAssignmentFile = async (file, code, extension) => {
@@ -306,8 +306,8 @@ const getMyGrade = async (req, res, next) => {
         }
         // check khoá học kết thúc chưa?
         const classs = await ClassModel.findOne({ code: classCode })
-        console.log('classs.complete', req.query, req.params, req.body);
-        // if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
+
+        if (!classs.complete) return res.status(401).json({ message: "Chưa thể xem điểm." })
 
         // lấy bảng điểm
         const result = await GradeModel.find(query).select("-__v -_id")
@@ -789,6 +789,9 @@ const getGrades = async (req, res, next) => {
 // fn: đánh dấu lớp hoàn thành => tính điểm tb cho học sinh
 const postFinalClass = async (req, res, next) => {
     try {
+        const user = req.user
+        if (!res.locals.isAuth || user.role !== "teacher") return res.status(401).json({ message: "Không được phép!" })
+
         const { classCode } = req.body
 
         // checkk complete
@@ -834,6 +837,125 @@ const postFinalClass = async (req, res, next) => {
     }
 }
 
+
+
+// #region ========== REVIEW ===========
+// fn: post a review
+const postReview = async (req, res, next) => {
+    try {
+        const user = req.user
+        const { assignmentCode, title, content } = req.body
+
+        // get assignemt info
+        const assignment = await AssignmentModel.findOne({ code: assignmentCode })
+
+        // get class info
+        const classs = await ClassModel.findOne({ code: assignment.classCode })
+
+        // get teacher info 
+        const teacher = await TeacherModel.findOne({ accountId: classs.accountId })
+
+        // get student info
+        const student = await StudentModel.findOne({ accountId: user._id })
+
+        console.log("student :", student);
+        console.log("teacher :", teacher);
+        console.log("classs :", classs);
+        console.log("assignment :", assignment);
+        // save review
+        let comments = [{ name: student.fullName, content, createAt: new Date() }]
+        await ReviewModel.create({
+            student, teacher, assignment, class: classs, title, comments
+        })
+
+        return res.status(200).json({ message: "Thành công!" })
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({ message: "Lỗi", error })
+    }
+}
+
+// fn: rep a review
+const postRepReview = async (req, res, next) => {
+    try {
+        const account = req.user
+        const { id, content } = req.body
+
+        // check complete
+        const review = await ReviewModel.findById(id)
+        if (review.complete) return res.status(401).json({ message: "Review đã hoàn thành" })
+        // get user 
+        var user = {}
+        if (account.role === "student") {
+            user = await StudentModel.findOne({ accountId: account._id })
+        } else {
+            user = await TeacherModel.findOne({ accountId: account._id })
+        }
+        let temp = { name: user.fullName, content, createAt: new Date() }
+        // update review
+        await ReviewModel.updateOne(
+            { _id: id },
+            { $push: { comments: temp } }
+        )
+        const result = await ReviewModel.findById(id)
+        return res.status(200).json({ message: "Thành công!", result })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({ message: "Lỗi", error })
+    }
+}
+
+// fn: complete review
+const postCompleteReview = async (req, res, next) => {
+    try {
+        const { id } = req.body
+        await ReviewModel.updateOne({ _id: id }, { complete: true })
+        return res.status(200).json({ message: 'Thành công' })
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({ message: "Lỗi", error })
+    }
+}
+
+// fn: get review 
+const getMyReview = async (req, res, next) => {
+    try {
+        const account = req.user
+        const { page = 1, limit = 12, complete, sort } = req.query
+
+        var nSkip = (parseInt(page) - 1) * parseInt(limit)
+        var query = {}
+        var sortBy = []
+        var user = {}
+        var result = {}
+
+        if (complete) query.complete = complete
+        if (sort) {
+            let field = sort.split("_")[0]
+            let value = sort.split("_")[1]
+            sortBy = [[field, value]]
+        }
+
+        if (account.role === "student") {
+            user = await StudentModel.findOne({ accountId: account._id })
+            query.student = user._id
+        } else {
+            user = await TeacherModel.findOne({ accountId: account._id })
+            query.teacher = user._id
+        }
+
+        result = await ReviewModel.find(query).select("-__v")
+            .skip(nSkip)
+            .limit(parseInt(limit))
+            .sort(sortBy)
+        return res.status(200).json({ message: "Thành công!", result })
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({ message: "Lỗi", error })
+    }
+}
+
 module.exports = {
     getInfoUser,
     postInfoUser,
@@ -861,4 +983,10 @@ module.exports = {
     getGrades,
     postFinalClass,
     deleteGradeStruct,
+
+    // review
+    postReview,
+    postCompleteReview,
+    postRepReview,
+    getMyReview,
 }

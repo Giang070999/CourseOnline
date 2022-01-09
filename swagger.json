@@ -1861,6 +1861,152 @@
                     }
                 }
             }
+        },
+        "/users/reviews": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Lấy những yêu cầu review của bản thân",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "complete",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Thành công!', result}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra!', error }"
+                    }
+                }
+            }
+        },
+        "/users/review": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Tạo yêu cầu review",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "assignmentCode",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "content",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Thành công!', result}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra!', error }"
+                    }
+                }
+            }
+        },
+        "/users/review-rep": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Rep yêu cầu review",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "_id của review",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "content",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Thành công!', result}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra!', error }"
+                    }
+                }
+            }
+        },
+        "/users/review-complete": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Kết thúc 1 review",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "_id của review",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{message: 'Thành công!'}"
+                    },
+                    "401": {
+                        "description": "{ message: 'Có lỗi xảy ra!', error }"
+                    }
+                }
+            }
         }
     }
 }
