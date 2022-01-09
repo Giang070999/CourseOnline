@@ -902,6 +902,10 @@ const postRepReview = async (req, res, next) => {
             { $push: { comments: temp } }
         )
         const result = await ReviewModel.findById(id)
+            .populate({ path: "student", select: "studentId fullName -_id" })
+            .populate({ path: "teacher", select: "fullName -_id" })
+            .populate({ path: "class", select: "code name -_id" })
+            .populate({ path: "assignment", select: "code name -_id" })
         return res.status(200).json({ message: "Thành công!", result })
 
     } catch (error) {
@@ -951,9 +955,9 @@ const getMyReview = async (req, res, next) => {
         }
 
         result = await ReviewModel.find(query).select("-__v")
-            .populate({ path: "student", select: "-__v -_id" })
-            .populate({ path: "teacher", select: "-__v -_id" })
-            .populate({ path: "class", select: "-__v -_id" })
+            .populate({ path: "student", select: "studentId fullName -_id" })
+            .populate({ path: "teacher", select: "fullName -_id" })
+            .populate({ path: "class", select: "code name" })
             .populate({ path: "assignment", select: "-__v -_id" })
             .skip(nSkip)
             .limit(parseInt(limit))

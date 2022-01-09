@@ -14,7 +14,7 @@ const reviewSchema = new Schema({
     },
     assignment: {
         type: Schema.Types.ObjectId,
-        ref: 'assignment',
+        ref: 'asignment',
         required: true
     },
     class: {
