@@ -951,6 +951,10 @@ const getMyReview = async (req, res, next) => {
         }
 
         result = await ReviewModel.find(query).select("-__v")
+            .populate({ path: "student", select: "-__v -_id" })
+            .populate({ path: "teacher", select: "-__v -_id" })
+            .populate({ path: "class", select: "-__v -_id" })
+            .populate({ path: "assignment", select: "-__v -_id" })
             .skip(nSkip)
             .limit(parseInt(limit))
             .sort(sortBy)
