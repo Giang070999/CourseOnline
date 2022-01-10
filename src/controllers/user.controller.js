@@ -340,6 +340,31 @@ const getMyGrade = async (req, res, next) => {
 }
 
 
+// fn : xem toàn bộ điểm
+const getAllMyGrade = async (req, res, next) => {
+    try {
+        const user = req.user
+        if (!res.locals.isAuth) return res.status(403).json({ message: "token không hợp lệ!" })
+
+        const student = await StudentModel.findOne({ accountId: user._id })
+        if (!student.studentId) return res.status(401).json({ message: "Tài khoản chưa có studentId!" })
+        const studentId = student.studentId
+
+        // lấy những bảng điểm đã có gpa (lớp đã end)
+        const result = await GradeModel.find({ studentId, gpa: { $ne: null } }).select("-_id -__v")
+        const courses = await ClassModel.find({ studentId, complete: false }).select("-_id -__v -students")
+
+        return res.status(200).json({ message: "Lấy toàn bộ bảng điểm thành công!", result, courses })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({
+            message: "Lỗi!", error
+        })
+    }
+}
+
+
 
 // ================= TEACHER =================
 // fn: tạo class
@@ -979,7 +1004,7 @@ module.exports = {
     postStudentID,
     postJoinClass,
     getMyGrade,
-
+    getAllMyGrade,
     // teacher
     postClass,
     postUpdateClass,

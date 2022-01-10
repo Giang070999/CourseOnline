@@ -34,6 +34,9 @@ userApi.get('/student/course/:code', passportAuth.jwtAuthentication, userControl
 // api: xem điểm (phân bổ điểm + danh sách bài tập trong từng phân bổ điểm + bảng điểm)
 userApi.get('/student/grade', passportAuth.jwtAuthentication, userController.getMyGrade)
 
+// api: xem toàn bộ bảng điểm các môn
+userApi.get('/student/grades', passportAuth.jwtAuthentication, userController.getAllMyGrade)
+
 // #endregion
 
 // #region ========== TEACHER APIs ===========
