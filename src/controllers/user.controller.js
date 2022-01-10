@@ -12,6 +12,7 @@ const readFileExcel = require('read-excel-file/node');
 const GradeModel = require('../models/grade.model')
 const GradeStructModel = require('../models/gradeStruct.model')
 const ReviewModel = require("../models/review.model")
+const AllGradeModel = require("../models/allGrade.model")
 
 // fn: upload assignment file to cloudinary
 const uploadAssignmentFile = async (file, code, extension) => {
@@ -351,10 +352,10 @@ const getAllMyGrade = async (req, res, next) => {
         const studentId = student.studentId
 
         // lấy những bảng điểm đã có gpa (lớp đã end)
-        const result = await GradeModel.find({ studentId, gpa: { $ne: null } }).select("-_id -__v")
-        const courses = await ClassModel.find({ studentId, complete: false }).select("-_id -__v -students")
+        const result = await AllGradeModel.find({ studentId }).select("-_id -__v")
+            .populate({ path: "classId", select: "name code" })
 
-        return res.status(200).json({ message: "Lấy toàn bộ bảng điểm thành công!", result, courses })
+        return res.status(200).json({ message: "Lấy toàn bộ bảng điểm thành công!", result })
 
     } catch (error) {
         console.log(error);
@@ -856,7 +857,15 @@ const postFinalClass = async (req, res, next) => {
             await GradeModel.updateOne({ studentId: gradeOf1Student.studentId },
                 { gpa: gpa.toFixed(2) }
             )
-            // console.log("calculate GPA for: ", gradeOf1Student.studentId);
+            // tạo bảng điểm tích luỹ
+            await AllGradeModel.create({
+                studentId: gradeOf1Student.studentId,
+                classCode,
+                classId: classs._id,
+                fullName: gradeOf1Student.fullName,
+                gpa: gpa.toFixed(2)
+            })
+
         })
         return res.status(200).json({ message: "thành công" })
 
