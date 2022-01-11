@@ -918,7 +918,7 @@ const postRepReview = async (req, res, next) => {
     try {
         const account = req.user
         const { id, content } = req.body
-
+        let teacherReply = true
         // check complete
         const review = await ReviewModel.findById(id)
         if (review.complete) return res.status(401).json({ message: "Review đã hoàn thành" })
@@ -926,6 +926,7 @@ const postRepReview = async (req, res, next) => {
         var user = {}
         if (account.role === "student") {
             user = await StudentModel.findOne({ accountId: account._id })
+            teacherReply = false
         } else {
             user = await TeacherModel.findOne({ accountId: account._id })
         }
@@ -933,7 +934,7 @@ const postRepReview = async (req, res, next) => {
         // update review
         await ReviewModel.updateOne(
             { _id: id },
-            { $push: { comments: temp } }
+            { $push: { comments: temp }, teacherReply }
         )
         const result = await ReviewModel.findById(id)
             .populate({ path: "student", select: "studentId fullName -_id" })

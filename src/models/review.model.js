@@ -41,8 +41,12 @@ const reviewSchema = new Schema({
         type: Boolean,
         default: false,
         required: true
+    },
+    teacherReply: {
+        type: Boolean,
+        default: false,
+        required: true
     }
-
 });
 
 const ReviewModel = mongoose.model('review', reviewSchema, 'reviews');
