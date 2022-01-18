@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "61d7027308adabaf83f45356"
+  },
+  "classCode": "156678",
+  "studentId": "120",
+  "fullName": "Nguyễn Thế Luân",
+  "scoreRecord": [
+    {
+      "assignmentCode": "504689",
+      "structCode": "296128",
+      "score": 2
+    },
+    {
+      "assignmentCode": "321134",
+      "structCode": "720714",
+      "score": 7
+    },
+    {
+      "assignmentCode": "074804",
+      "structCode": "296128",
+      "score": 10
+    }
+  ],
+  "gpa": 4.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d7027508adabaf83f4535d"
+  },
+  "classCode": "156678",
+  "studentId": "121",
+  "fullName": "Nguyễn Thế Luân",
+  "scoreRecord": [
+    {
+      "assignmentCode": "504689",
+      "structCode": "296128",
+      "score": 3
+    },
+    {
+      "assignmentCode": "321134",
+      "structCode": "720714",
+      "score": 9
+    },
+    {
+      "assignmentCode": "074804",
+      "structCode": "296128",
+      "score": 10
+    }
+  ],
+  "gpa": 5.15,
+  "__v": 0
+}]

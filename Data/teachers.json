@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "61c88f674eeb5b729e0522ed"
+  },
+  "accountId": {
+    "$oid": "61c88f674eeb5b729e0522eb"
+  },
+  "fullName": "Giáo viên",
+  "birthday": "2022-01-02T22:03",
+  "gender": false,
+  "phone": "12345678900",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c88f704eeb5b729e0522f2"
+  },
+  "accountId": {
+    "$oid": "61c88f704eeb5b729e0522f0"
+  },
+  "fullName": "giáo viên 2",
+  "birthday": "1970-01-01",
+  "gender": true,
+  "phone": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c88f794eeb5b729e0522f7"
+  },
+  "accountId": {
+    "$oid": "61c88f794eeb5b729e0522f5"
+  },
+  "fullName": "giáo viên 3",
+  "birthday": "1970-01-01",
+  "gender": true,
+  "phone": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d66f91788c6a8721dc2e5f"
+  },
+  "accountId": {
+    "$oid": "61d66f90788c6a8721dc2e5d"
+  },
+  "fullName": "Test",
+  "birthday": "2022-01-11T11:41",
+  "gender": true,
+  "phone": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d66ffc788c6a8721dc2e74"
+  },
+  "accountId": {
+    "$oid": "61d66ffb788c6a8721dc2e72"
+  },
+  "fullName": "Tess",
+  "birthday": "2022-01-02T11:44",
+  "gender": true,
+  "phone": null,
+  "__v": 0
+}]

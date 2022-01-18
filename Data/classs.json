@@ -1,0 +1,93 @@
+[{
+  "_id": {
+    "$oid": "61d44097f2c8d741d9061389"
+  },
+  "code": "156678",
+  "accountId": {
+    "$oid": "61c88f674eeb5b729e0522eb"
+  },
+  "teacher": "Giáo viên",
+  "phone": "",
+  "name": "Lịch sử",
+  "students": [
+    {
+      "studentId": "120",
+      "fullName": "Nguyễn Thế Luân",
+      "joined": true
+    },
+    {
+      "studentId": "121",
+      "fullName": "Nguyễn Thế Luân",
+      "joined": true
+    },
+    {
+      "studentId": "122",
+      "fullName": "Ng A",
+      "joined": false
+    },
+    {
+      "studentId": "123",
+      "fullName": "Ng B",
+      "joined": false
+    },
+    {
+      "studentId": "124",
+      "fullName": "Ng C",
+      "joined": false
+    },
+    {
+      "studentId": "125",
+      "fullName": "Ng D",
+      "joined": false
+    }
+  ],
+  "active": true,
+  "complete": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d995a32b2817a1570884a7"
+  },
+  "code": "222076",
+  "accountId": {
+    "$oid": "61c88f674eeb5b729e0522eb"
+  },
+  "teacher": "Giáo viên",
+  "phone": "12345678900",
+  "name": "Tin Học",
+  "students": [
+    {
+      "studentId": "120",
+      "fullName": "Nguyễn Thế Luân",
+      "joined": false
+    },
+    {
+      "studentId": "121",
+      "fullName": "Nguyễn Thế Luân",
+      "joined": true
+    },
+    {
+      "studentId": "122",
+      "fullName": "Ng A",
+      "joined": false
+    },
+    {
+      "studentId": "123",
+      "fullName": "Ng B",
+      "joined": true
+    },
+    {
+      "studentId": "124",
+      "fullName": "Ng C",
+      "joined": true
+    },
+    {
+      "studentId": "125",
+      "fullName": "Ng D",
+      "joined": true
+    }
+  ],
+  "active": true,
+  "complete": false,
+  "__v": 0
+}]

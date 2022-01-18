@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "61d461e39778b7504b216790"
+  },
+  "studentId": "120",
+  "classCode": "156678",
+  "className": "Lịch sử",
+  "active": true,
+  "teacher": "Giáo viên",
+  "__v": 0,
+  "complete": true
+},{
+  "_id": {
+    "$oid": "61d462669778b7504b2167b9"
+  },
+  "studentId": "121",
+  "classCode": "156678",
+  "className": "Lịch sử",
+  "active": true,
+  "teacher": "Giáo viên",
+  "__v": 0,
+  "complete": true
+},{
+  "_id": {
+    "$oid": "61d99dbdef49c34016d5d4e6"
+  },
+  "studentId": "121",
+  "classCode": "222076",
+  "className": "Tin Học",
+  "active": true,
+  "complete": false,
+  "teacher": "Giáo viên",
+  "__v": 0
+}]

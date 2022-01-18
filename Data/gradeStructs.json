@@ -1,0 +1,51 @@
+[{
+  "_id": {
+    "$oid": "61d447c2f2c8d741d90613cc"
+  },
+  "code": "296128",
+  "classCode": "156678",
+  "structName": "15 phút",
+  "percent": 5,
+  "total": 120,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d6fcee56e016c5aa676995"
+  },
+  "code": "720714",
+  "classCode": "156678",
+  "structName": "Giữa kì",
+  "percent": 50,
+  "total": 100,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d7007508adabaf83f452e0"
+  },
+  "code": "047498",
+  "classCode": "156678",
+  "structName": "Cuối kì",
+  "percent": 40,
+  "total": 120,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d9999f2b2817a15708850a"
+  },
+  "code": "523444",
+  "classCode": "156678",
+  "structName": "Test",
+  "percent": 5,
+  "total": 100,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d9a28a1cff043fad28f864"
+  },
+  "code": "157069",
+  "classCode": "222076",
+  "structName": "15 phút",
+  "percent": 40,
+  "total": 100,
+  "__v": 0
+}]

@@ -1,0 +1,103 @@
+[{
+  "_id": {
+    "$oid": "61d6df8556e016c5aa6768bf"
+  },
+  "owner": {
+    "$oid": "61c88f674eeb5b729e0522ed"
+  },
+  "code": "504689",
+  "classCode": "156678",
+  "name": "Test",
+  "attachFile": "https://res.cloudinary.com/uthcmc/raw/upload/v1641471876/assignment/504689.txt",
+  "structCode": "296128",
+  "pending": {
+    "$date": "2022-01-03T19:24:00Z"
+  },
+  "expired": {
+    "$date": "2022-01-19T19:24:00Z"
+  },
+  "status": "finalized",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d6fd1256e016c5aa6769a4"
+  },
+  "owner": {
+    "$oid": "61c88f674eeb5b729e0522ed"
+  },
+  "code": "321134",
+  "classCode": "156678",
+  "name": "Giữa kì",
+  "attachFile": "https://res.cloudinary.com/uthcmc/raw/upload/v1641479442/assignment/321134.pdf",
+  "structCode": "720714",
+  "pending": {
+    "$date": "2021-12-28T21:30:00Z"
+  },
+  "expired": {
+    "$date": "2022-01-07T21:30:00Z"
+  },
+  "status": "finalized",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d70a57159f171ebab107c0"
+  },
+  "owner": {
+    "$oid": "61c88f674eeb5b729e0522ed"
+  },
+  "code": "074804",
+  "classCode": "156678",
+  "name": "Test1",
+  "attachFile": "https://res.cloudinary.com/uthcmc/raw/upload/v1641482839/assignment/074804.jpg",
+  "structCode": "296128",
+  "pending": {
+    "$date": "2021-12-27T22:27:00Z"
+  },
+  "expired": {
+    "$date": "2022-01-12T22:27:00Z"
+  },
+  "status": "finalized",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d999f62b2817a157088525"
+  },
+  "owner": {
+    "$oid": "61c88f674eeb5b729e0522ed"
+  },
+  "code": "314656",
+  "classCode": "156678",
+  "name": "Test",
+  "attachFile": "https://res.cloudinary.com/uthcmc/raw/upload/v1641650677/assignment/314656.jpg",
+  "structCode": "523444",
+  "pending": {
+    "$date": "2022-01-05T21:04:00Z"
+  },
+  "expired": {
+    "$date": "2022-01-11T21:04:00Z"
+  },
+  "status": "available",
+  "__v": 0,
+  "note": "Bài nâng cao"
+},{
+  "_id": {
+    "$oid": "61daa6df51b0528cc81bb07e"
+  },
+  "owner": {
+    "$oid": "61c88f674eeb5b729e0522ed"
+  },
+  "code": "434105",
+  "note": "Về học bài 1",
+  "classCode": "222076",
+  "name": "Tétts",
+  "attachFile": "",
+  "structCode": "157069",
+  "pending": {
+    "$date": "2022-01-10T16:11:00Z"
+  },
+  "expired": {
+    "$date": "2022-01-18T16:11:00Z"
+  },
+  "status": "available",
+  "__v": 0
+}]

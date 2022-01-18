@@ -1,0 +1,133 @@
+[{
+  "_id": {
+    "$oid": "61c88f674eeb5b729e0522eb"
+  },
+  "email": "teacher1@gmail.com",
+  "password": "$2a$10$IUQbKFUKjui4s17cOCGXKOWjb9iZ.Elr1dZdfVPmLvyQlgz4CT9Iq",
+  "googleId": null,
+  "authType": "local",
+  "role": "teacher",
+  "refreshToken": null,
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c88f704eeb5b729e0522f0"
+  },
+  "email": "teacher2@gmail.com",
+  "password": "$2a$10$4JWGsj6WKtZhyQt0Eif2R.WgmIGdRetC2zAJ5LhaZ2BmkwnEExEm.",
+  "googleId": null,
+  "authType": "local",
+  "role": "teacher",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHTVMiLCJzdWIiOnsiYWNjb3VudElkIjoiNjFjODhmNzA0ZWViNWI3MjllMDUyMmYwIn0sImlhdCI6MTY0MDUzNDI3NywiZXhwIjoxNjU2MDg2Mjc3fQ.qzc8YHkIz_N4gYgFpGQ_zuWaAtbT--SM3at0Jyk0_p4",
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c88f794eeb5b729e0522f5"
+  },
+  "email": "teacher3@gmail.com",
+  "password": "$2a$10$Fzgf.eJfk9p7J/d8blJbceLhN8e6KYjIycri91pomp/9wGZM8wvDO",
+  "googleId": null,
+  "authType": "local",
+  "role": "teacher",
+  "refreshToken": null,
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c88ff2a7a188fd11eec172"
+  },
+  "email": "hacthuylong@gmail.com",
+  "password": "$2a$10$gqkkzxcyLNivdnrIxD1zJOSW37cgA1OcaoUfRjVba7GESckr2SnLq",
+  "googleId": null,
+  "authType": "local",
+  "role": "student",
+  "refreshToken": null,
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c89007a7a188fd11eec177"
+  },
+  "email": "efert269@gmail.com",
+  "password": "$2a$10$4BGss.NM1xdD8a70fm9blux84WTftOBeXS5iGMPCdlv5ovUqZRkJq",
+  "googleId": null,
+  "authType": "local",
+  "role": "student",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHTVMiLCJzdWIiOnsiYWNjb3VudElkIjoiNjFjODkwMDdhN2ExODhmZDExZWVjMTc3In0sImlhdCI6MTY0MTIyNDI4MiwiZXhwIjoxNjU2Nzc2MjgyfQ.eLJjtN7wswzrUx71ibF3NjaRmPXY82yCPNpxUrrZrtA",
+  "active": false,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61c8a91422d1ecaa1970ead0"
+  },
+  "email": "giangsauhu3@gmail.com",
+  "password": null,
+  "googleId": "105582805973290246793",
+  "authType": "google",
+  "role": "student",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHTVMiLCJzdWIiOnsiYWNjb3VudElkIjoiNjFjOGE5MTQyMmQxZWNhYTE5NzBlYWQwIiwia2VlcExvZ2luIjp0cnVlfSwiaWF0IjoxNjQwNTQwNDUxLCJleHAiOjE2NTYwOTI0NTF9.8IDClBJYy94TdblPKBkr-QYNi91rKx7wjkFYR6pKudQ",
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d43aa5f2c8d741d9061239"
+  },
+  "email": "call.me.is.luan@gmail.com",
+  "password": "$2a$10$j1o0bV6DqqtzRH6RXyM3s.ocplJF..7N6Y.rfZHEMouhGs86VH.wG",
+  "googleId": "106467236372333064742",
+  "authType": "google",
+  "role": "student",
+  "refreshToken": null,
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d66f90788c6a8721dc2e5d"
+  },
+  "email": "testemail@gmail.com",
+  "password": "$2a$10$5zsuC8sTKvcqCcg70agXcephm8/fJxLYjzxoBTtk//meACXVlyiby",
+  "googleId": null,
+  "authType": "local",
+  "role": "teacher",
+  "refreshToken": null,
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61d66ffb788c6a8721dc2e72"
+  },
+  "email": "test123@gmail.com",
+  "password": "$2a$10$PYieFd/EU/Jb5pV5gAvWmuLwc.MHEgAw01Br3RKB2jPzgB1zcTVwS",
+  "googleId": null,
+  "authType": "local",
+  "role": "teacher",
+  "refreshToken": null,
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61e17e95a8851462ff7837d8"
+  },
+  "email": "kiethohohoho@gmail.com",
+  "password": null,
+  "googleId": "112265455899044533691",
+  "authType": "google",
+  "role": "student",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJHTVMiLCJzdWIiOnsiYWNjb3VudElkIjoiNjFlMTdlOTVhODg1MTQ2MmZmNzgzN2Q4Iiwia2VlcExvZ2luIjp0cnVlfSwiaWF0IjoxNjQyMTY3OTU3LCJleHAiOjE2NTc3MTk5NTd9.HysjT2pclx6LJRTk6OvP4vKSTFyb4Uivf3pkgx4wwjg",
+  "active": true,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61e286eba8851462ff7837e9"
+  },
+  "email": "taint.bhsoft@gmail.com",
+  "password": "$2a$10$pCCJttzzvQ.S1nN.bQC7ue8uo6qVVpI4hd/arI.lUhNdB3bv7YDBm",
+  "googleId": null,
+  "authType": "local",
+  "role": "student",
+  "refreshToken": null,
+  "active": true,
+  "__v": 0
+}]
